@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brand Category Form</title>
+</head>
+<body>
+
+    <h2>Brand Category Form</h2>
+
+    <form id="categoryForm">
+        <label for="brandSelect">Select Brand:</label>
+        <select id="brandSelect" name="brandId" onchange="fetchParentCategory()">
+            <option value="">--Select Brand--</option>
+            <option value="1">Brand 1</option>
+            <option value="2">Brand 2</option>
+        </select>
+
+        <br><br>
+
+        <label for="parentCategorySelect">Select Parent Category:</label>
+        <select id="parentCategorySelect" name="parentCategoryId" onchange="fetchProductCategory()">
+            <option value="">--Select Parent Category--</option>
+        </select>
+
+        <br><br>
+
+        <label for="productCategorySelect">Select Product Category:</label>
+        <select id="productCategorySelect" name="productCategoryId">
+            <option value="">--Select Product Category--</option>
+        </select>
+    </form>
+
+    <script>
+        function fetchParentCategory() {
+            const brandId = document.getElementById("brandSelect").value;
+
+            if (brandId) {
+                fetch(`/fetchParentCategory?brandId=${brandId}`)
+                    .then(() => {
+                        console.log("Parent category fetched.");
+                        // you can populate the dropdown if backend returns data
+                        document.getElementById("parentCategorySelect").innerHTML = `
+                            <option value="p1">Parent 1</option>
+                            <option value="p2">Parent 2</option>
+                        `;
+                    });
+            }
+        }
+
+        function fetchProductCategory() {
+            const brandId = document.getElementById("brandSelect").value;
+            const parentCategoryId = document.getElementById("parentCategorySelect").value;
+
+            if (brandId && parentCategoryId) {
+                fetch(`/fetchProductCategory?brandId=${brandId}&parentCategoryId=${parentCategoryId}`)
+                    .then(() => {
+                        console.log("Product category fetched.");
+                        // you can populate the dropdown if backend returns data
+                        document.getElementById("productCategorySelect").innerHTML = `
+                            <option value="prod1">Product 1</option>
+                            <option value="prod2">Product 2</option>
+                        `;
+                    });
+            }
+        }
+    </script>
+
+</body>
+</html>

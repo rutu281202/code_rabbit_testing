@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<!-- ***  UI Author Neville Doke  *** -->
+	<link rel="stylesheet" href="../css/left_top_main_style.css" />
+	<link rel="stylesheet" href="../css/style.css" />
+	<!----===== Boxicons CSS - Added by Neville =====-->
+	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+	<!-- SwiperJS - Added by Neville -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+	<title>Dashboard</title>
+	<link rel="icon" href="./images/logo.png" type="image/x-icon" />
+	<style>
+		/* Remove the default Swiper arrow */
+		.swiper-button-prev::after,
+		.swiper-button-next::after {
+			content: '';
+			/* Remove default arrow */
+		}
+
+		/* Custom styling using the .arrow-container */
+		.swiper-button-prev,
+		.swiper-button-next {
+			background: rgba(0, 124, 213, 0.954);
+			border-radius: 50%;
+			margin: 30px;
+			margin-top: 100px;
+			width: 38px;
+			height: 38px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.3s ease;
+			position: absolute;
+			z-index: 10;
+			cursor: pointer;
+			box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+			/* Drop shadow added */
+		}
+
+		/* Add a hover effect */
+		.swiper-button-prev:hover,
+		.swiper-button-next:hover {
+			background: rgba(0, 40, 172, 0.735);
+			box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+			transform: scale(1.1);
+			/* Slight scaling effect on hover */
+		}
+
+		/* Custom Left Arrow */
+		.swiper-button-prev i {
+			font-size: 24px;
+			color: rgb(255, 255, 255);
+		}
+
+		/* Custom Right Arrow */
+		.swiper-button-next i {
+			font-size: 24px;
+			color: rgb(255, 255, 255);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="top_nav">
+		<div class="notification">
+			<i class="bx bx-bell icon"></i>
+		</div>
+		<div class="profile-info">
+			<div class="profile">
+				<i class="bx bx-user-circle icon"></i>
+				<ul class="profile-menus">
+					<li><a class="profile-menu" href="#"><span class="text">New project...</span></a></li>
+					<li><a class="profile-menu" href="#"><span class="text">Settings</span></a></li>
+					<li><a class="profile-menu" href="#"><span class="text">Profile</span></a></li>
+					<hr class="profile-menu-divider">
+					<li><a class="profile-menu" th:href="@{/logout}"><span class="text">Sign out</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<nav class="side_nav close">
+		<header>
+			<div class="image-text">
+				<span class="image">
+					<img src="../images/logo.png" alt="logo" />
+				</span>
+				<div class="text header-text">
+					<span class="name">Neville Doke</span>
+					<span class="profession">Software Developer</span>
+				</div>
+			</div>
+			<i class="bx bx-chevron-right toggle"></i>
+		</header>
+		<div class="menu-bar">
+			<div class="menu">
+				<!-- <li class="search-box">
+                        <a href="#">
+                            <i class="bx bx-search icon"></i>
+                            <input type="text" placeholder="Search" />
+                        </a>
+                    </li> -->
+				<ul class="menu-links">
+					<li class="nav-link">
+						<a href="dashboard.html">
+							<i class="bx bx-home-alt icon"></i>
+							<span class="text nav-text">Dashboard</span>
+						</a>
+						<span class="text tooltip">Dashboard</span>
+					</li>
+					<li class="nav-link">
+						<a href="all_assests.html">
+							<i class="bx bx-archive icon"></i>
+							<span class="text nav-text">All Assets</span>
+						</a>
+						<span class="text tooltip">All Assets</span>
+					</li>
+					<li class="nav-link">
+						<a href="upload_assets_details.html">
+							<i class="bx bx-export icon"></i>
+							<span class="text nav-text">Upload</span>
+						</a>
+						<span class="text tooltip">Upload</span>
+					</li>
+					<li class="nav-link">
+						<a href="#">
+							<i class="bx bx-user icon"></i>
+							<span class="text nav-text">Activity Log</span>
+						</a>
+						<span class="text tooltip">Activity Log</span>
+					</li>
+					<li class="nav-link">
+						<a href="#">
+							<i class="bx bx-cog icon"></i>
+							<span class="text nav-text">Settings</span>
+						</a>
+						<span class="text tooltip">Settings</span>
+					</li>
+					<li class="nav-link">
+						<a href="#">
+							<i class="bx bx-book icon"></i>
+							<span class="text nav-text">User Manual</span>
+						</a>
+						<span class="text tooltip">User Manual</span>
+					</li>
+				</ul>
+			</div>
+
+			<div class="bottom-content">
+				<li class="">
+					<a th:href="@{/logout}">
+						<i class="bx bx-log-out icon"></i>
+						<span class="text nav-text">Logout</span>
+					</a>
+				</li>
+				<li class="mode">
+					<div class="moon-sun">
+						<i class="bx bx-moon icon moon"></i>
+						<i class="bx bx-sun icon sun"></i>
+					</div>
+					<span class="mode-text text">Dark Mode</span>
+					<div class="toggle-switch">
+						<span class="switch"></span>
+					</div>
+				</li>
+			</div>
+		</div>
+	</nav>
+
+	<main class="main_content">
+		<div class="row">
+			<div class="col">
+				<!-- Search and Filter Section -->
+				<div class="search-filter-container">
+					<div class="search-wrapper">
+						<input type="text" class="search-input" placeholder="Search by title, tags, or keywords..." />
+						<button class="search-btn">
+							<i class="bx bx-search"></i>
+						</button>
+					</div>
+					<button class="filter-btn">
+						<i class="bx bx-slider-alt"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Advanced Filter Panel -->
+		<div class="filter-panel" id="filterPanel">
+			<div class="filter-header">
+				<h3>Advanced Filters</h3>
+				<button class="close-btn"><i class="bx bx-chevrons-down"></i></button>
+			</div>
+			<label for="approval-status">Approval Status</label>
+			<select id="approval-status">
+				<option value="approved">Approved</option>
+				<option value="pending">Pending</option>
+				<option value="rejected">Rejected</option>
+			</select>
+
+			<label for="uploaded-by">Uploaded By</label>
+			<select id="uploaded-by">
+				<option value="client">Client Name</option>
+				<option value="admin">Admin</option>
+			</select>
+
+			<label for="type">Type</label>
+			<select id="type">
+				<option value="image">Image</option>
+				<option value="document">Document</option>
+				<option value="video">Video</option>
+			</select>
+
+			<!-- <label for="date-range">Date Range</label>
+					  <div class="date-picker">
+						<input type="text" id="date-range" placeholder="Select date range">
+					  </div> -->
+
+			<h3>Recent Tags</h3>
+			<div class="tags">
+				<span class="tag">Air conditioning</span>
+				<span class="tag">Assisted living</span>
+				<span class="tag">Controlled access</span>
+				<span class="tag">Cable Ready</span>
+				<span class="tag">College</span>
+				<span class="tag">Corporate</span>
+				<span class="tag">Elevator</span>
+			</div>
+
+			<button class="apply-btn">Apply</button>
+		</div>
+
+
+		<div class="row enhanced-buttons">
+			<div class="col col-5">
+				<div class="upload-assets">
+					<a class="enhanced-button upload-btn" href="/upload-assets-page">
+						<div class="button-content">
+							<i class="bx bx-cloud-upload icon"></i>
+							<div class="text-content">
+								<div class="button-name">Upload Asset</div>
+								<div class="button-sub">Supported formats: JPG, PNG, PDF</div>
+							</div>
+						</div>
+						<div class="arrow-container">
+							<i class="bx bx-chevron-right"></i>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="col">
+				<div class="upload-assets">
+					<a class="enhanced-button campaign-btn" href="create_new_folder.html">
+						<div class="button-content">
+							<i class="bx bx-plus-circle icon"></i>
+							<div class="text-content">
+								<div class="button-name">Create Folder</div>
+								<div class="button-sub">Start new marketing folder</div>
+							</div>
+						</div>
+						<div class="arrow-container">
+							<i class="bx bx-chevron-right"></i>
+						</div>
+					</a>
+				</div>
+			</div>
+			<svg style="display: none;">
+				<filter id="liquid">
+					<feTurbulence type="fractalNoise" baseFrequency="0.01 0.1" numOctaves="2" />
+					<feDisplacementMap in="SourceGraphic" scale="15" />
+					<feGaussianBlur stdDeviation="2" />
+				</filter>
+			</svg>
+		</div>
+
+		<!-- Carousel Section Start -->
+		<div class="row">
+			<div class="col">
+				<!-- Carousel Section -->
+				<div class="carousel-container swiper">
+					<h2>Recently uploaded</h2>
+					<!-- <button class="carousel-arrow left-arrow">&#8249;</button> -->
+					<div class="carousel swiper-wrapper">
+						<div class="carousel-card swiper-slide">
+							<!-- <img src="../images/image.png" alt="Card Image">
+								<p>Image Name</p>
+								<div class="card-info">
+									<h4>Category: Nature</h4>
+									<p>Tag: Landscape</p>
+									<p>Uploaded by: Admin</p>
+									<button> View More</button>
+								</div> -->
+							<div class="card-thumbnail">
+								<div class="card-thumbnail-images">
+									<img src="../images/image.png" alt="Card Image">
+									<img src="../images/logo.png" alt="Card Image">
+								</div>
+								<div class="card-thumbnail-badges">
+
+									<div class="card-thumbnail-badges-container green-highlight" style="">
+										<div class="card-thumbnail-badges-container-dot" style=""></div>
+										<div class="badges-name">Uploaded</div>
+									</div>
+									<div class="card-thumbnail-badges-container no-green-highlight" style="">
+										<div class="badges-name">Croma</div>
+									</div>
+								</div>
+
+								<div class="card-thumbnail-head">
+									<h4 class="card-thumbnail-header">KAMA 1</h4>
+									<p class="card-thumbnail-title">Kama Almond Oil</p>
+								</div>
+							</div>
+							<div class="card-thumbnail-profile">
+								<div class="card-thumbnail-profile-info">
+									<h4 class="card-thumbnail-profile-designation">KAMA</h4>
+									<p class="card-thumbnail-profile-name">Sonali</p>
+								</div>
+								<img src="../images/logo.png" class="card-thumbnail-profile-image"
+									alt="Card-Profile-Image">
+							</div>
+						</div>
+						<div class="carousel-card swiper-slide">
+							<!-- <img src="../images/image.png" alt="Card Image">
+								<p>Image Name</p>
+								<div class="card-info">
+									<h4>Category: Nature</h4>
+									<p>Tag: Landscape</p>
+									<p>Uploaded by: Admin</p>
+									<button> View More</button>
+								</div> -->
+							<div class="card-thumbnail">
+								<div class="card-thumbnail-images">
+									<img src="../images/image.png" alt="Card Image">
+									<img src="../images/image.png" alt="Card Image">
+								</div>
+								<div class="card-thumbnail-badges">
+
+									<div class="card-thumbnail-badges-container green-highlight" style="">
+										<div class="card-thumbnail-badges-container-dot" style=""></div>
+										<div class="badges-name">Uploaded</div>
+									</div>
+									<div class="card-thumbnail-badges-container no-green-highlight" style="">
+										<div class="badges-name">Croma</div>
+									</div>
+								</div>
+
+								<div class="card-thumbnail-head">
+									<h4 class="card-thumbnail-header">KAMA 2</h4>
+									<p class="card-thumbnail-title">Kama Almond Oil</p>
+								</div>
+							</div>
+							<div class="card-thumbnail-profile">
+								<div class="card-thumbnail-profile-info">
+									<h4 class="card-thumbnail-profile-designation">KAMA</h4>
+									<p class="card-thumbnail-profile-name">Sonali</p>
+								</div>
+								<img src="../images/logo.png" class="card-thumbnail-profile-image"
+									alt="Card-Profile-Image">
+							</div>
+						</div>
+						<div class="carousel-card swiper-slide">
+							<!-- <img src="../images/image.png" alt="Card Image">
+								<p>Image Name</p>
+								<div class="card-info">
+									<h4>Category: Nature</h4>
+									<p>Tag: Landscape</p>
+									<p>Uploaded by: Admin</p>
+									<button> View More</button>
+								</div> -->
+							<div class="card-thumbnail">
+								<div class="card-thumbnail-images">
+									<img src="../images/image.png" alt="Card Image">
+									<img src="../images/image.png" alt="Card Image">
+								</div>
+								<div class="card-thumbnail-badges">
+
+									<div class="card-thumbnail-badges-container green-highlight" style="">
+										<div class="card-thumbnail-badges-container-dot" style=""></div>
+										<div class="badges-name">Uploaded</div>
+									</div>
+									<div class="card-thumbnail-badges-container no-green-highlight" style="">
+										<div class="badges-name">Croma</div>
+									</div>
+								</div>
+
+								<div class="card-thumbnail-head">
+									<h4 class="card-thumbnail-header">KAMA 3</h4>
+									<p class="card-thumbnail-title">Kama Almond Oil</p>
+								</div>
+							</div>
+							<div class="card-thumbnail-profile">
+								<div class="card-thumbnail-profile-info">
+									<h4 class="card-thumbnail-profile-designation">KAMA</h4>
+									<p class="card-thumbnail-profile-name">Sonali</p>
+								</div>
+								<img src="../images/logo.png" class="card-thumbnail-profile-image"
+									alt="Card-Profile-Image">
+							</div>
+						</div>
+						<div class="carousel-card swiper-slide">
+							<!-- <img src="../images/image.png" alt="Card Image">
+								<p>Image Name</p>
+								<div class="card-info">
+									<h4>Category: Nature</h4>
+									<p>Tag: Landscape</p>
+									<p>Uploaded by: Admin</p>
+									<button> View More</button>
+								</div> -->
+							<div class="card-thumbnail">
+								<div class="card-thumbnail-images">
+									<img src="../images/image.png" alt="Card Image">
+									<img src="../images/image.png" alt="Card Image">
+								</div>
+								<div class="card-thumbnail-badges">
+
+									<div class="card-thumbnail-badges-container green-highlight" style="">
+										<div class="card-thumbnail-badges-container-dot" style=""></div>
+										<div class="badges-name">Uploaded</div>
+									</div>
+									<div class="card-thumbnail-badges-container no-green-highlight" style="">
+										<div class="badges-name">Croma</div>
+									</div>
+								</div>
+
+								<div class="card-thumbnail-head">
+									<h4 class="card-thumbnail-header">KAMA 4</h4>
+									<p class="card-thumbnail-title">Kama Almond Oil</p>
+								</div>
+							</div>
+							<div class="card-thumbnail-profile">
+								<div class="card-thumbnail-profile-info">
+									<h4 class="card-thumbnail-profile-designation">KAMA</h4>
+									<p class="card-thumbnail-profile-name">Sonali</p>
+								</div>
+								<img src="../images/logo.png" class="card-thumbnail-profile-image"
+									alt="Card-Profile-Image">
+							</div>
+						</div>
+						<div class="carousel-card swiper-slide">
+							<!-- <img src="../images/image.png" alt="Card Image">
+								<p>Image Name</p>
+								<div class="card-info">
+									<h4>Category: Nature</h4>
+									<p>Tag: Landscape</p>
+									<p>Uploaded by: Admin</p>
+									<button> View More</button>
+								</div> -->
+							<div class="card-thumbnail">
+								<div class="card-thumbnail-images">
+									<img src="../images/image.png" alt="Card Image">
+									<img src="../images/image.png" alt="Card Image">
+								</div>
+								<div class="card-thumbnail-badges">
+
+									<div class="card-thumbnail-badges-container green-highlight" style="">
+										<div class="card-thumbnail-badges-container-dot" style=""></div>
+										<div class="badges-name">Uploaded</div>
+									</div>
+									<div class="card-thumbnail-badges-container no-green-highlight" style="">
+										<div class="badges-name">Croma</div>
+									</div>
+								</div>
+
+								<div class="card-thumbnail-head">
+									<h4 class="card-thumbnail-header">KAMA 5</h4>
+									<p class="card-thumbnail-title">Kama Almond Oil</p>
+								</div>
+							</div>
+							<div class="card-thumbnail-profile">
+								<div class="card-thumbnail-profile-info">
+									<h4 class="card-thumbnail-profile-designation">KAMA</h4>
+									<p class="card-thumbnail-profile-name">Sonali</p>
+								</div>
+								<img src="../images/logo.png" class="card-thumbnail-profile-image"
+									alt="Card-Profile-Image">
+							</div>
+						</div>
+
+					</div>
+					<!-- <button class="carousel-arrow right-arrow">&#8250;</button> -->
+
+					<!-- If we need pagination -->
+					<!-- <div class="swiper-pagination"></div> -->
+
+					<!-- If we need navigation buttons -->
+					<!-- <div class="swiper-button-prev"></div>
+						<div class="swiper-button-next"></div> -->
+				</div>
+				<div class="swiper-button-prev"><i class="bx bx-chevron-left"></i></div>
+				<div class="swiper-button-next"><i class="bx bx-chevron-right"></i></div>
+			</div>
+		</div>
+
+		<!-- Carousel Section End -->
+
+	</main>
+
+
+	<script>
+
+	async function storeCustomerId() {
+	    try {
+	        const response = await fetch("/session-id");
+
+	        if (!response.ok) {
+	            console.error("Failed to fetch customer ID");
+	            return;
+	        }
+
+	        const data = await response.json();
+	        console.log("Customer ID:", data.customerId);
+
+	        // Store Customer ID in local storage
+	        localStorage.setItem("customerId", data.customerId);
+
+
+	    } catch (error) {
+	        console.error("Error fetching customer ID:", error);
+	    }
+	}
+
+	// Call the function after login
+	storeCustomerId();
+
+
+
+</script>
+
+
+	<!-- <footer class="footer_info">
+			<p>Copyright © Contexio 2025 Your Website. All Rights Reserved.</p>
+		</footer> -->
+
+	<!-- SwiperJS - Added by Neville -->
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+	<!-- Date Picker - Added by Neville -->
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="../js/script.js"></script>
+</body>
+
+</html>
